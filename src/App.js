@@ -5,27 +5,28 @@ import Snake from './components/Snake';
 
 
 const STEP = 4
+const initialState = {
+  snakeBody: [
+    [0, 0],
+    [STEP, 0],
+  ],
+  food: generateFoodCoordinate(),
+  direction: 'RIGHT',
+  time: 200
+}
+
+// 食物坐标 x, y 是 0 ~ 96 之间 的偶数
+function generateFoodCoordinate() {
+  const MAX = 98
+  const MIN = 1
+  const x = Math.floor((Math.random() * MAX + MIN) / STEP) * STEP
+  const y = Math.floor((Math.random() * MAX + MIN) / STEP) * STEP
+  return [x, y]
+}
 
 class App extends Component {
 
-  state = {
-    snakeBody: [
-      [0, 0],
-      [STEP, 0]
-    ],
-    food: this.generateFoodCoordinate(),
-    direction: 'RIGHT',
-    time: 100
-  }
-
-  // 食物坐标 x, y 是 0 ~ 96 之间 的偶数
-  generateFoodCoordinate() {
-    const MAX = 98
-    const MIN = 1
-    const x = Math.floor((Math.random() * MAX + MIN) / STEP) * STEP
-    const y = Math.floor((Math.random() * MAX + MIN) / STEP) * STEP
-    return [x, y]
-  }
+  state = initialState
 
   componentDidMount() {
     document.addEventListener('keydown', this.controlDirection.bind(this))
@@ -34,6 +35,7 @@ class App extends Component {
 
   componentDidUpdate() {
     this.checkIsOut()
+    this.checkIsEatFood()
   }
 
   controlDirection(e) {
@@ -43,9 +45,7 @@ class App extends Component {
       'ArrowRight': 'RIGHT',
       'ArrowLeft': 'LEFT',
     }
-
     if (!Object.keys(keysMap).includes(e.key)) return
-
     this.setState({ direction: keysMap[e.key] })
   }
 
@@ -78,8 +78,24 @@ class App extends Component {
     }
   }
 
+  checkIsEatFood() {
+    const head = this.state.snakeBody[this.state.snakeBody.length - 1]
+    const food = this.state.food
+
+    if (head[0] === food[0] && head[1] === food[1]) {
+      let newSnake = [...this.state.snakeBody];
+      newSnake.unshift([]);
+
+      this.setState({
+        food: generateFoodCoordinate(),
+        snakeBody: newSnake 
+      })
+    }
+  }
+
   onGameOver() {
     alert('游戏结束啦！0 分！')
+    this.setState(initialState)
   }
 
   render() {
