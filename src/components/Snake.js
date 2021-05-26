@@ -4,9 +4,13 @@ function Snake(props) {
   return (
     <>
       {
-        snakeBody.map((dot,dotIndex) => (
-          <span key={dotIndex} className="dot snake" style={{ left: `${dot[0]}%`, top: `${dot[1]}%` }}></span>
-        ))
+        snakeBody.map((dot, dotIndex) => {
+          const style = { left: `${dot[0]}%`, top: `${dot[1]}%` }
+            return (
+              <span key={dotIndex} className="dot snake" style={style}></span>
+            )
+          }
+        )
       }
     </>
   )

@@ -1,23 +1,27 @@
 .game-area {
   position: relative;
   margin: 100px auto;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   border: 1px solid black;
 }
 
 
 .dot {
   position: absolute;
+  box-sizing: border-box;
   display: inline-block;
-  width: 2%;
-  height: 2%;
+  width: 4%;
+  height: 4%;
+  border: 1px solid #fff;
 }
 
 .snake {
+  z-index: 2;
   background-color: black;
 }
 
 .food {
+  z-index: 1;
   background-color: red;
 }
