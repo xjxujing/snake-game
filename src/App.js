@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
+import Food from './components/Food';
+import Snake from './components/Snake';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends Component {
+
+  state = {
+    snakeBody: [
+      [0, 0],
+      [2, 0]
+    ],
+    food: this.generateFoodCoordinate()
+  }
+
+  // 食物坐标 x, y 是 0 ~ 98 之间 
+  generateFoodCoordinate() {
+    const MAX = 98
+    const MIN = 1
+    const x = Math.floor((Math.random() * MAX + MIN) / 2) * 2
+    const y = Math.floor((Math.random() * MAX + MIN) / 2) * 2
+    return [x, y]
+  }
+
+
+  render() {
+    return (
+      <div className="game-area">
+        <Snake snakeBody={this.state.snakeBody}></Snake>
+        <Food food={this.state.food}></Food>
+      </div>
+    )
+  }
+
+
+
 }
 
 export default App;
