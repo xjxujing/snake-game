@@ -4,6 +4,7 @@ import Food from './components/Food';
 import Snake from './components/Snake';
 
 
+let timer = null
 const STEP = 4
 const initialState = {
   snakeBody: [
@@ -12,7 +13,9 @@ const initialState = {
   ],
   food: generateFoodCoordinate(),
   direction: 'RIGHT',
-  time: 200
+  time: 200,
+
+  gameState: 'START', // START | PAUSE | CONTINUE | OVER
 }
 
 // 食物坐标 x, y 是 0 ~ 96 之间 的偶数
@@ -30,7 +33,6 @@ class App extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.controlDirection.bind(this))
-    this.moveSnake()
   }
 
   componentDidUpdate() {
@@ -50,6 +52,7 @@ class App extends Component {
   }
 
   moveSnake = () => {
+    clearTimeout(timer)
     const body = [...this.state.snakeBody]
     const head = body[body.length - 1]
 
@@ -64,7 +67,7 @@ class App extends Component {
     body.push(moveHead)
     body.shift()
     this.setState({ snakeBody: body })
-    setTimeout(this.moveSnake, this.state.time)
+    timer = setTimeout(this.moveSnake, this.state.time)
   }
 
   checkIsOut() {
@@ -88,7 +91,7 @@ class App extends Component {
 
       this.setState({
         food: generateFoodCoordinate(),
-        snakeBody: newSnake 
+        snakeBody: newSnake
       })
     }
   }
@@ -98,12 +101,49 @@ class App extends Component {
     this.setState(initialState)
   }
 
+  onGameStart = () => {
+    clearTimeout(timer)
+    this.setState(initialState)
+    this.moveSnake()
+  }
+
+  onGameStateChange = () =>  {
+    if(this.state.gameState === 'PAUSE') {
+      this.onGameContinue()
+    }else {
+      this.onGamePause()
+    }
+  }
+
+  onGamePause = () => {
+    this.setState({ gameState: 'PAUSE' })
+    clearTimeout(timer)
+  }
+
+  onGameContinue = () => {
+    this.setState({ gameState: 'CONTINUE' })
+    this.moveSnake()
+  }
+
   render() {
     return (
-      <div className="game-area">
-        <Snake snakeBody={this.state.snakeBody}></Snake>
-        <Food food={this.state.food}></Food>
-      </div>
+      <>
+        <div>
+          <button onClick={this.onGameStart}>开始</button>
+
+          <button onClick={this.onGameStateChange}>
+            {this.state.gameState === 'PAUSE' ? '继续' : '暂停'}
+          </button>
+
+          <button>得分：{this.state.snakeBody.length - 2}</button>
+        </div>
+
+        <div className="game-area">
+          <Snake snakeBody={this.state.snakeBody}></Snake>
+          <Food food={this.state.food}></Food>
+        </div>
+
+      </>
     )
   }
 }
