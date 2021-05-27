@@ -33,6 +33,7 @@ class App extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.controlDirection.bind(this))
+    this.moveSnake()
   }
 
   componentDidUpdate() {
