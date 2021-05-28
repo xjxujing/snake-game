@@ -2,31 +2,22 @@
 import "./App.css";
 // import Food from './components/Food';
 import Snake from "./components/Snake";
-import { useRef } from "react";
 import useSnake from "./hooks/useSnake";
 
 function Game() {
-  // const time = 200
+  const time = 1000
   const [snakeBody, moveSnake] = useSnake();
-  const timer = useRef(null);
+  let timer = null
 
   function onGameStart() {
-    if (!timer.current) {
-      timer.current = setInterval(() => {
-        moveSnake();
-      }, 200);
-    }
-  }
-
-  function onGameStop() {
-    clearTimeout(timer.current);
-    timer.current = null;
+    clearTimeout(timer)
+    moveSnake()
+    timer = setTimeout(onGameStart, time)
   }
 
   return (
     <>
       <button onClick={onGameStart}>开始</button>
-      <button onClick={onGameStop}>暂停</button>
       <div className="game-area">
         <Snake snakeBody={snakeBody}></Snake>
         {/* <Food food={this.state.food}></Food> */}

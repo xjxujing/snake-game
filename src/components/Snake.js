@@ -1,6 +1,6 @@
 function Snake(props) {
   const { snakeBody } = props
-  // console.log('子组件 Snake', props)
+  console.log('子组件 Snake', props)
 
   return (
     <>
