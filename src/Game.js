@@ -1,18 +1,17 @@
-// import { useEffect } from "react";
 import "./App.css";
 // import Food from './components/Food';
 import Snake from "./components/Snake";
 import useSnake from "./hooks/useSnake";
 
 function Game() {
-  const time = 1000
+  const time = 200;
   const [snakeBody, moveSnake] = useSnake();
-  let timer = null
+  let timer = null;
 
   function onGameStart() {
-    clearTimeout(timer)
-    moveSnake()
-    timer = setTimeout(onGameStart, time)
+    clearTimeout(timer);
+    moveSnake();
+    timer = setTimeout(onGameStart, time);
   }
 
   return (
