@@ -3,6 +3,7 @@ import './App.css';
 import Food from './components/Food';
 import Snake from './components/Snake';
 import Control from './components/Control'
+import Cover from './components/Cover'
 import buttonWav from './audio/button.wav'
 
 
@@ -194,6 +195,8 @@ class App extends Component {
           changeSpeed={type => this.changeSpeed(type)}
         >
         </Control>
+
+        <Cover gameState={this.state.gameState}></Cover>
       </div>
     )
   }

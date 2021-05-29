@@ -11,15 +11,15 @@ class Control extends Component {
           <div className={`arrow-${this.props.direction}`}>
             <span><i className="iconfont icon-jiantou"></i></span>
           </div>
-          <div>
-            <div className="control-speed">
-              <span>SPEED</span>
-              <div>
-                <span onClick={() => this.props.changeSpeed('SPEED_DOWN')}><i className="iconfont icon-jian"></i></span>
-                <span onClick={() => this.props.changeSpeed('SPEED_UP')}><i className="iconfont icon-jia"></i></span>
-              </div>
+
+          <div className="control-speed">
+            <small>SPEED</small>
+            <div style={{lineHeight: '4.5rem'}}>
+              <span onClick={() => this.props.changeSpeed('SPEED_DOWN')}><i className="iconfont icon-jian"></i></span>
+              <span onClick={() => this.props.changeSpeed('SPEED_UP')}><i className="iconfont icon-jia"></i></span>
             </div>
           </div>
+
         </div>
 
         <div className="control-direction-box">
@@ -35,8 +35,15 @@ class Control extends Component {
           </div>
         </div>
 
-        <div className="control-right" onClick={this.props.onGameStateChange}>
-          pause and score
+        <div className="control-right" >
+          <div className="record">
+            <h6>000000</h6>
+            <h6>000000</h6>
+          </div>
+
+          <div>
+            <span onClick={this.props.onGameStateChange}><i className="iconfont icon-pause"></i></span>
+          </div>
         </div>
 
       </div>

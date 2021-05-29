@@ -32,7 +32,6 @@
 
 .dot {
   position: absolute;
-  box-sizing: border-box;
   display: inline-block;
   width: 4%;
   height: 4%;
@@ -58,6 +57,9 @@
 }
 
 .control-box>.control-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   width: 28%;
 }
@@ -87,11 +89,24 @@
 }
 
 .control-box>.control-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 33%;
+  text-align: right;
+  padding-right: 1rem;
 }
 
-i[class~="icon-jian"], i[class~="icon-jia"],i[class~="icon-jiantou"] {
+.control-right .record {
+  padding-top: 1rem;
+}
+
+i[class~="icon-jian"], i[class~="icon-jia"], i[class~="icon-jiantou"] {
   font-size: 4.8rem;
+}
+
+i[class~="icon-pause"] {
+  font-size: 3.8rem;
 }
 
 .arrow-RIGHT {
@@ -108,4 +123,21 @@ i[class~="icon-jian"], i[class~="icon-jia"],i[class~="icon-jiantou"] {
 
 .arrow-DOWN {
   transform: scaleY(0.8) rotateZ(90deg);
+}
+
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(151, 151, 151, .2);
+  z-index: 3;
+  text-align: center;
+  line-height: 50vh;
+  font-size: 2rem;
+  color: grey;
+  letter-spacing: 2rem;
+  padding-left: 3.5rem;
 }

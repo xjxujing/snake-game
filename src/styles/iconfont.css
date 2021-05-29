@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2579202 */
-  src: url('//at.alicdn.com/t/font_2579202_ldg4tvjbyl.woff2?t=1622280426168') format('woff2'),
-       url('//at.alicdn.com/t/font_2579202_ldg4tvjbyl.woff?t=1622280426168') format('woff'),
-       url('//at.alicdn.com/t/font_2579202_ldg4tvjbyl.ttf?t=1622280426168') format('truetype');
+  src: url('//at.alicdn.com/t/font_2579202_gc05j17fugg.woff2?t=1622300750504') format('woff2'),
+       url('//at.alicdn.com/t/font_2579202_gc05j17fugg.woff?t=1622300750504') format('woff'),
+       url('//at.alicdn.com/t/font_2579202_gc05j17fugg.ttf?t=1622300750504') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,38 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-kaishi:before {
+  content: "\e6be";
+}
+
+.icon-kaishi1:before {
+  content: "\e617";
+}
+
+.icon-start:before {
+  content: "\e631";
+}
+
+.icon-kaishi2:before {
+  content: "\e639";
+}
+
+.icon-zanting:before {
+  content: "\e662";
+}
+
+.icon-pause:before {
+  content: "\e604";
+}
+
+.icon-zanting2:before {
+  content: "\e628";
+}
+
+.icon-zanting1:before {
+  content: "\f455";
 }
 
 .icon-jiantou:before {
