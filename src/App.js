@@ -2,6 +2,7 @@ import { Component } from 'react';
 import './App.css';
 import Food from './components/Food';
 import Snake from './components/Snake';
+import Control from './components/Control'
 
 
 let timer = null
@@ -13,9 +14,17 @@ const initialState = {
   ],
   food: generateFoodCoordinate(),
   direction: 'RIGHT',
-  time: 200,
+  time: 800,
 
   gameState: 'START', // START | PAUSE | CONTINUE | OVER
+
+  aspectRatio: calcScreenAspectRatio()
+}
+
+function calcScreenAspectRatio() {
+  const W = document.documentElement.clientWidth
+  const H = document.documentElement.clientHeight
+  return (W / H) >= 0.56
 }
 
 // 食物坐标 x, y 是 0 ~ 96 之间 的偶数
@@ -39,6 +48,10 @@ class App extends Component {
   componentDidUpdate() {
     this.checkIsOut()
     this.checkIsEatFood()
+  }
+
+  clickDirection(direction) {
+    this.setState({ direction })
   }
 
   controlDirection(e) {
@@ -97,6 +110,17 @@ class App extends Component {
     }
   }
 
+  changeSpeed(type) {
+
+    if (type === 'SPEED_UP') {
+      const upTime = this.state.time
+      this.setState({ time: upTime - 100 })
+    } else {
+      this.setState({ time: this.state.time - 10 })
+    }
+
+  }
+
   onGameOver() {
     alert('游戏结束啦！0 分！')
     this.setState(initialState)
@@ -108,10 +132,10 @@ class App extends Component {
     this.moveSnake()
   }
 
-  onGameStateChange = () =>  {
-    if(this.state.gameState === 'PAUSE') {
+  onGameStateChange = () => {
+    if (this.state.gameState === 'PAUSE') {
       this.onGameContinue()
-    }else {
+    } else {
       this.onGamePause()
     }
   }
@@ -126,10 +150,11 @@ class App extends Component {
     this.moveSnake()
   }
 
+
   render() {
     return (
-      <>
-        <div>
+      <div className={[`wrapper ${this.state.aspectRatio ? 'height-100' : 'width-100'}`]}>
+        {/* <div>
           <button onClick={this.onGameStart}>开始</button>
 
           <button onClick={this.onGameStateChange}>
@@ -137,14 +162,21 @@ class App extends Component {
           </button>
 
           <button>得分：{this.state.snakeBody.length - 2}</button>
-        </div>
+        </div> */}
 
         <div className="game-area">
           <Snake snakeBody={this.state.snakeBody}></Snake>
           <Food food={this.state.food}></Food>
         </div>
 
-      </>
+        <Control
+          direction={this.state.direction}
+          clickDirection={direc => this.clickDirection(direc)}
+          onGameStateChange={this.onGameStateChange}
+          changeSpeed={type => this.changeSpeed(type)}
+        >
+        </Control>
+      </div>
     )
   }
 }

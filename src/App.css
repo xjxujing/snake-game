@@ -1,11 +1,34 @@
-.game-area {
-  position: relative;
-  margin: 100px auto;
-  width: 500px;
-  height: 500px;
-  border: 1px solid black;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #ccc;
 }
 
+.height-100 {
+  /* w / h = 0.56 */
+  width: 56vh;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.width-100 {
+  /* w / h = 0.56 */
+  position: absolute;
+  width: 100vw;
+  height: 178.57vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.game-area {
+  position: relative;
+  width: 100%;
+  height: 0;
+  border-bottom: 10px solid;
+  /* w / h  = 0.75*/
+  padding-bottom: 133.33%;
+}
 
 .dot {
   position: absolute;
@@ -24,4 +47,65 @@
 .food {
   z-index: 1;
   background-color: red;
+}
+
+.control-box {
+  width: 100%;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+}
+
+.control-box>.control-left {
+  text-align: center;
+  width: 28%;
+}
+
+.control-box>.control-direction-box {
+  width: 33%;
+}
+
+.control-box>.control-direction-box .button {
+  transform: translateY(18%) rotateZ(45deg);
+}
+
+.control-box>.control-direction-box .item2 {
+  transform: rotateX(180deg);
+}
+
+.control-box .control-direction {
+  width: 50%;
+}
+
+.control-box .control-direction.d1 {
+  transform: rotateY(180deg);
+}
+
+.control-box .control-direction.d3 {
+  transform: rotateY(180deg);
+}
+
+.control-box>.control-right {
+  width: 33%;
+}
+
+i[class~="icon-jian"], i[class~="icon-jia"],i[class~="icon-jiantou"] {
+  font-size: 4.8rem;
+}
+
+.arrow-RIGHT {
+  transform: scaleX(1.2);
+}
+
+.arrow-LEFT {
+  transform: scaleX(1.2) rotateY(180deg);
+}
+
+.arrow-UP {
+  transform: scaleY(0.8) rotateZ(-90deg);
+}
+
+.arrow-DOWN {
+  transform: scaleY(0.8) rotateZ(90deg);
 }
