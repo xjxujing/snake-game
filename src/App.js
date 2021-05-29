@@ -3,6 +3,7 @@ import './App.css';
 import Food from './components/Food';
 import Snake from './components/Snake';
 import Control from './components/Control'
+import buttonWav from './audio/button.wav'
 
 
 let timer = null
@@ -14,12 +15,15 @@ const initialState = {
   ],
   food: generateFoodCoordinate(),
   direction: 'RIGHT',
-  time: 800,
+  time: 400,
 
   gameState: 'START', // START | PAUSE | CONTINUE | OVER
 
   aspectRatio: calcScreenAspectRatio()
 }
+
+let buttonVoice = new Audio(buttonWav)
+
 
 function calcScreenAspectRatio() {
   const W = document.documentElement.clientWidth
@@ -51,6 +55,16 @@ class App extends Component {
   }
 
   clickDirection(direction) {
+    const currentDirection = this.state.direction
+    if(currentDirection === direction) return
+
+    if(currentDirection === 'LEFT' && direction === 'RIGHT') return
+    if(direction === 'LEFT' && currentDirection === 'RIGHT') return
+
+    if(currentDirection === 'UP' && direction === 'DOWN') return
+    if(direction === 'UP' && currentDirection === 'DOWN') return
+
+    buttonVoice.play()
     this.setState({ direction })
   }
 
@@ -62,6 +76,7 @@ class App extends Component {
       'ArrowLeft': 'LEFT',
     }
     if (!Object.keys(keysMap).includes(e.key)) return
+    buttonVoice.play()
     this.setState({ direction: keysMap[e.key] })
   }
 
@@ -111,14 +126,17 @@ class App extends Component {
   }
 
   changeSpeed(type) {
+    const currentTime = this.state.time
 
     if (type === 'SPEED_UP') {
-      const upTime = this.state.time
-      this.setState({ time: upTime - 100 })
+      if (currentTime < 200) return
+      buttonVoice.play()
+      this.setState({ time: currentTime - 100 })
     } else {
-      this.setState({ time: this.state.time - 10 })
+      if (currentTime > 700) return
+      buttonVoice.play()
+      this.setState({ time: currentTime + 100 })
     }
-
   }
 
   onGameOver() {
