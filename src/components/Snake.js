@@ -1,7 +1,10 @@
-function Snake(props) {
-  const { snakeBody } = props
-  // console.log('子组件 Snake', props)
 
+import { memo } from 'react'
+
+
+const Snake = memo(function(props) {
+
+  const { snakeBody } = props
   return (
     <>
       {
@@ -16,6 +19,6 @@ function Snake(props) {
       }
     </>
   )
-}
+})
 
 export default Snake

@@ -1,6 +1,6 @@
-function Cover(props) {
-  console.log('cover', props)
+import { memo } from 'react'
 
+const Cover = memo(function(props) {
   const state = props.gameState
 
   return (
@@ -13,6 +13,6 @@ function Cover(props) {
       </div>
     </div>
   )
+})
 
-}
 export default Cover

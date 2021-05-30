@@ -2,13 +2,9 @@ import { Component } from 'react';
 import control from '../assert/control.png';
 
 class Control extends Component {
-
-  // state = {
-  //   score: ``
-  // }
-
+ 
   render() {
-    // console.log(this.props)
+    console.log('子组件 Control')
     return (
       <div className="control-box">
         <div className="control-left">

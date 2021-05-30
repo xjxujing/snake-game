@@ -4,6 +4,7 @@ import Food from './components/Food';
 import Snake from './components/Snake';
 import Control from './components/Control'
 import Cover from './components/Cover'
+import GameOver from './components/GameOver'
 import buttonWav from './audio/button.wav'
 
 
@@ -53,6 +54,11 @@ class App extends Component {
   }
 
   componentDidUpdate() {
+    if (this.state.gameState === 'OVER') {
+      clearTimeout(timer)
+      timer = null
+      return
+    }
     this.checkIsOut()
     this.checkIsEatFood()
     this.checkIsTouchSelf()
@@ -132,7 +138,7 @@ class App extends Component {
     const body = [...this.state.snakeBody]
     const head = body.pop()
     body.forEach(item => {
-      if(item[0] === head[0] && item[1] === head[1]) {
+      if (item[0] === head[0] && item[1] === head[1]) {
         this.onGameOver()
       }
     })
@@ -153,8 +159,11 @@ class App extends Component {
   }
 
   onGameOver() {
+    // clearTimeout(timer)
+    // timer = null
     alert(`游戏结束！`);
     this.setState(initialState)
+    // this.setState({ gameState: 'OVER' })
   }
 
   onGameStart = () => {
@@ -206,6 +215,8 @@ class App extends Component {
           onGameStateChange={this.onGameStateChange}
         >
         </Cover>
+
+        <GameOver gameState={this.state.gameState}></GameOver>
       </div>
     )
   }
