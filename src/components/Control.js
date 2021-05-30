@@ -3,6 +3,10 @@ import control from '../assert/control.png';
 
 class Control extends Component {
 
+  // state = {
+  //   score: ``
+  // }
+
   render() {
     // console.log(this.props)
     return (
@@ -14,7 +18,7 @@ class Control extends Component {
 
           <div className="control-speed">
             <small>SPEED</small>
-            <div style={{lineHeight: '4.5rem'}}>
+            <div style={{ lineHeight: '4.5rem' }}>
               <span onClick={() => this.props.changeSpeed('SPEED_DOWN')}><i className="iconfont icon-jian"></i></span>
               <span onClick={() => this.props.changeSpeed('SPEED_UP')}><i className="iconfont icon-jia"></i></span>
             </div>
@@ -37,11 +41,11 @@ class Control extends Component {
 
         <div className="control-right" >
           <div className="record">
-            <h6>000000</h6>
-            <h6>000000</h6>
+            <h6>{`${(this.props.snakeBody.length  - 2) * 5}`}</h6>
+            <h6>{}</h6>
           </div>
 
-          <div>
+          <div style={{ display: `${this.props.gameState !== 'PAUSE' ? 'block' : 'none'}` }}>
             <span onClick={this.props.onGameStateChange}><i className="iconfont icon-pause"></i></span>
           </div>
         </div>

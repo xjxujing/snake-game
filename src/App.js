@@ -20,7 +20,9 @@ const initialState = {
 
   gameState: 'START', // START | PAUSE | CONTINUE | OVER
 
-  aspectRatio: calcScreenAspectRatio()
+  aspectRatio: calcScreenAspectRatio(),
+
+  score: 0
 }
 
 let buttonVoice = new Audio(buttonWav)
@@ -53,32 +55,32 @@ class App extends Component {
   componentDidUpdate() {
     this.checkIsOut()
     this.checkIsEatFood()
+    this.checkIsTouchSelf()
   }
 
-  clickDirection(direction) {
+  clickDirection = (direction) => {
     const currentDirection = this.state.direction
-    if(currentDirection === direction) return
+    if (currentDirection === direction) return
 
-    if(currentDirection === 'LEFT' && direction === 'RIGHT') return
-    if(direction === 'LEFT' && currentDirection === 'RIGHT') return
+    if (currentDirection === 'LEFT' && direction === 'RIGHT') return
+    if (direction === 'LEFT' && currentDirection === 'RIGHT') return
 
-    if(currentDirection === 'UP' && direction === 'DOWN') return
-    if(direction === 'UP' && currentDirection === 'DOWN') return
+    if (currentDirection === 'UP' && direction === 'DOWN') return
+    if (direction === 'UP' && currentDirection === 'DOWN') return
 
     buttonVoice.play()
     this.setState({ direction })
   }
 
-  controlDirection(e) {
+  controlDirection = ({ key }) => {
     const keysMap = {
       'ArrowUp': 'UP',
       'ArrowDown': 'DOWN',
       'ArrowRight': 'RIGHT',
       'ArrowLeft': 'LEFT',
     }
-    if (!Object.keys(keysMap).includes(e.key)) return
-    buttonVoice.play()
-    this.setState({ direction: keysMap[e.key] })
+    if (!Object.keys(keysMap).includes(key)) return
+    this.clickDirection(keysMap[key])
   }
 
   moveSnake = () => {
@@ -126,6 +128,16 @@ class App extends Component {
     }
   }
 
+  checkIsTouchSelf() {
+    const body = [...this.state.snakeBody]
+    const head = body.pop()
+    body.forEach(item => {
+      if(item[0] === head[0] && item[1] === head[1]) {
+        this.onGameOver()
+      }
+    })
+  }
+
   changeSpeed(type) {
     const currentTime = this.state.time
 
@@ -141,7 +153,7 @@ class App extends Component {
   }
 
   onGameOver() {
-    alert('游戏结束啦！0 分！')
+    alert(`游戏结束！`);
     this.setState(initialState)
   }
 
@@ -157,6 +169,7 @@ class App extends Component {
     } else {
       this.onGamePause()
     }
+    buttonVoice.play()
   }
 
   onGamePause = () => {
@@ -173,30 +186,26 @@ class App extends Component {
   render() {
     return (
       <div className={[`wrapper ${this.state.aspectRatio ? 'height-100' : 'width-100'}`]}>
-        {/* <div>
-          <button onClick={this.onGameStart}>开始</button>
-
-          <button onClick={this.onGameStateChange}>
-            {this.state.gameState === 'PAUSE' ? '继续' : '暂停'}
-          </button>
-
-          <button>得分：{this.state.snakeBody.length - 2}</button>
-        </div> */}
-
         <div className="game-area">
           <Snake snakeBody={this.state.snakeBody}></Snake>
           <Food food={this.state.food}></Food>
         </div>
 
         <Control
+          snakeBody={this.state.snakeBody}
           direction={this.state.direction}
           clickDirection={direc => this.clickDirection(direc)}
           onGameStateChange={this.onGameStateChange}
           changeSpeed={type => this.changeSpeed(type)}
+          gameState={this.state.gameState}
         >
         </Control>
 
-        <Cover gameState={this.state.gameState}></Cover>
+        <Cover
+          gameState={this.state.gameState}
+          onGameStateChange={this.onGameStateChange}
+        >
+        </Cover>
       </div>
     )
   }
