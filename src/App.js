@@ -8,7 +8,12 @@ import GameOver from './components/GameOver'
 import buttonWav from './audio/button.wav'
 
 
-let timer = null
+let timeoutInstance;
+
+const clear = (tm) => {
+  if (tm) clearTimeout(tm);
+};
+
 const STEP = 4
 const initialState = {
   snakeBody: [
@@ -17,13 +22,11 @@ const initialState = {
   ],
   food: generateFoodCoordinate(),
   direction: 'RIGHT',
-  time: 400,
+  time: 500,
 
   gameState: 'START', // START | PAUSE | CONTINUE | OVER
 
   aspectRatio: calcScreenAspectRatio(),
-
-  score: 0
 }
 
 let buttonVoice = new Audio(buttonWav)
@@ -48,20 +51,21 @@ class App extends Component {
 
   state = initialState
 
+
   componentDidMount() {
     document.addEventListener('keydown', this.controlDirection.bind(this))
     this.moveSnake()
   }
 
-  componentDidUpdate() {
-    if (this.state.gameState === 'OVER') {
-      clearTimeout(timer)
-      timer = null
-      return
-    }
+  componentDidUpdate = () => {
+    if (this.state.gameState === 'OVER') return
     this.checkIsOut()
     this.checkIsEatFood()
     this.checkIsTouchSelf()
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.controlDirection.bind(this))
   }
 
   clickDirection = (direction) => {
@@ -90,7 +94,9 @@ class App extends Component {
   }
 
   moveSnake = () => {
-    clearTimeout(timer)
+    clear(timeoutInstance)
+    if (this.state.gameState === 'OVER') return
+
     const body = [...this.state.snakeBody]
     const head = body[body.length - 1]
 
@@ -105,21 +111,23 @@ class App extends Component {
     body.push(moveHead)
     body.shift()
     this.setState({ snakeBody: body })
-    timer = setTimeout(this.moveSnake, this.state.time)
+    
+    timeoutInstance = setTimeout(this.moveSnake, this.state.time)
   }
 
-  checkIsOut() {
+  checkIsOut = () => {
     const head = this.state.snakeBody[this.state.snakeBody.length - 1]
+    // debugger
+
     if (head[0] >= 100 ||
       head[1] >= 100 ||
       head[0] < 0 ||
       head[1] < 0) {
-
       this.onGameOver()
     }
   }
 
-  checkIsEatFood() {
+  checkIsEatFood = () => {
     const head = this.state.snakeBody[this.state.snakeBody.length - 1]
     const food = this.state.food
 
@@ -134,7 +142,7 @@ class App extends Component {
     }
   }
 
-  checkIsTouchSelf() {
+  checkIsTouchSelf = () => {
     const body = [...this.state.snakeBody]
     const head = body.pop()
     body.forEach(item => {
@@ -144,7 +152,7 @@ class App extends Component {
     })
   }
 
-  changeSpeed(type) {
+  changeSpeed = (type) => {
     const currentTime = this.state.time
 
     if (type === 'SPEED_UP') {
@@ -158,16 +166,8 @@ class App extends Component {
     }
   }
 
-  onGameOver() {
-    // clearTimeout(timer)
-    // timer = null
-    alert(`游戏结束！`);
-    this.setState(initialState)
-    // this.setState({ gameState: 'OVER' })
-  }
-
   onGameStart = () => {
-    clearTimeout(timer)
+    clear(timeoutInstance)
     this.setState(initialState)
     this.moveSnake()
   }
@@ -182,8 +182,8 @@ class App extends Component {
   }
 
   onGamePause = () => {
+    clear(timeoutInstance)
     this.setState({ gameState: 'PAUSE' })
-    clearTimeout(timer)
   }
 
   onGameContinue = () => {
@@ -191,8 +191,13 @@ class App extends Component {
     this.moveSnake()
   }
 
+  onGameOver = () => {
+    clear(timeoutInstance)
+    this.setState({ gameState: 'OVER' })
+  }
 
   render() {
+    console.log('App render')
     return (
       <div className={[`wrapper ${this.state.aspectRatio ? 'height-100' : 'width-100'}`]}>
         <div className="game-area">
