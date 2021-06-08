@@ -10,8 +10,6 @@ import GameOver from './components/GameOver'
 import buttonWav from './audio/click.ogg'
 import overWav from './audio/gameover.ogg'
 
-
-
 let timeoutInstance;
 
 const clear = (tm) => {
@@ -28,17 +26,17 @@ const initialState = {
   direction: 'RIGHT',
   time: 500,
   gameState: 'START', // OVER | CONTINUE | PAUSE | START
-  aspectRatio: calcScreenAspectRatio(),
+  aspectRatio: calcViewportAspectRatio(),
   score: 0
 }
 
 let buttonVoice = new Audio(buttonWav)
 let overVoice = new Audio(overWav)
 
-function calcScreenAspectRatio() {
-  const W = document.body.clientWidth
-  const H = document.body.clientHeight
-  return (W / H) >= 0.56
+function calcViewportAspectRatio() {
+  const W = document.documentElement.clientWidth
+  const H = document.documentElement.clientHeight
+  return (W / H).toFixed(2) >= 0.56
 }
 
 // 食物坐标 x, y 是 0 ~ 96 之间 的偶数
