@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import './index.css'
 
 const Food = memo(function(props) {
   const { food } = props

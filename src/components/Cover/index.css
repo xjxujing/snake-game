@@ -1,0 +1,12 @@
+.cover .opera {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+  text-shadow: none;
+  line-height: 1;
+}
+
+i[class~="icon-play"], i[class~="icon-list"] {
+  font-size: 3.8rem;
+  color: #000;
+}

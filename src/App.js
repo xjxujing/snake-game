@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import './App.css';
+
+import GameStart from './components/GameStart'
 import Food from './components/Food';
 import Snake from './components/Snake';
 import Control from './components/Control'
@@ -24,7 +26,7 @@ const initialState = {
   direction: 'RIGHT',
   time: 500,
 
-  gameState: 'START', // START | PAUSE | CONTINUE | OVER
+  gameState: 'START', // OVER | CONTINUE | PAUSE | START
 
   aspectRatio: calcScreenAspectRatio(),
 }
@@ -54,7 +56,6 @@ class App extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.controlDirection.bind(this))
-    this.moveSnake()
   }
 
   componentDidUpdate = () => {
@@ -111,7 +112,7 @@ class App extends Component {
     body.push(moveHead)
     body.shift()
     this.setState({ snakeBody: body })
-    
+
     timeoutInstance = setTimeout(this.moveSnake, this.state.time)
   }
 
@@ -156,20 +157,25 @@ class App extends Component {
     const currentTime = this.state.time
 
     if (type === 'SPEED_UP') {
-      if (currentTime < 200) return
+      if (currentTime < 300) return
       buttonVoice.play()
       this.setState({ time: currentTime - 100 })
     } else {
-      if (currentTime > 700) return
+      if (currentTime > 800) return
       buttonVoice.play()
       this.setState({ time: currentTime + 100 })
     }
   }
 
   onGameStart = () => {
-    clear(timeoutInstance)
-    this.setState(initialState)
+    this.changeGameState('CONTINUE')
     this.moveSnake()
+  }
+
+  reStartGame = () => {
+    this.changeGameState('START')
+    this.setState(initialState)
+    clear(timeoutInstance)
   }
 
   onGameStateChange = () => {
@@ -181,25 +187,33 @@ class App extends Component {
     buttonVoice.play()
   }
 
+  changeGameState = (state) => {
+    this.setState({ gameState: state })
+  }
+
   onGamePause = () => {
     clear(timeoutInstance)
-    this.setState({ gameState: 'PAUSE' })
+    this.changeGameState('PAUSE')
   }
 
   onGameContinue = () => {
-    this.setState({ gameState: 'CONTINUE' })
+    this.changeGameState('CONTINUE')
     this.moveSnake()
   }
 
   onGameOver = () => {
     clear(timeoutInstance)
-    this.setState({ gameState: 'OVER' })
+    this.changeGameState('OVER')
   }
 
   render() {
-    console.log('App render')
     return (
       <div className={[`wrapper ${this.state.aspectRatio ? 'height-100' : 'width-100'}`]}>
+        <GameStart
+          gameState={this.state.gameState}
+          onGameStart={this.onGameStart}
+        />
+
         <div className="game-area">
           <Snake snakeBody={this.state.snakeBody}></Snake>
           <Food food={this.state.food}></Food>
@@ -218,6 +232,8 @@ class App extends Component {
         <Cover
           gameState={this.state.gameState}
           onGameStateChange={this.onGameStateChange}
+          changeGameState={this.changeGameState}
+          reStartGame={this.reStartGame}
         >
         </Cover>
 

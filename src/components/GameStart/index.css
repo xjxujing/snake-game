@@ -1,0 +1,21 @@
+.start-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  z-index: 3;
+  text-align: center;
+  line-height: 50vh;
+  font-size: 2rem;
+  color: white;
+  letter-spacing: 2rem;
+  padding-left: 3.5rem;
+  text-shadow: 4px 4px 4px #000;
+}
+
+
+.start-btn {
+  line-height: 4rem;
+}

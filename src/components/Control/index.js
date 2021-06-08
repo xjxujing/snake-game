@@ -1,10 +1,10 @@
 import { Component } from 'react';
-import control from '../assert/control.png';
+import control from '../../assert/control.png';
+import './index.css'
 
 class Control extends Component {
  
   render() {
-    console.log('子组件 Control')
     return (
       <div className="control-box">
         <div className="control-left">
@@ -41,7 +41,7 @@ class Control extends Component {
             <h6>{}</h6>
           </div>
 
-          <div style={{ display: `${this.props.gameState !== 'PAUSE' ? 'block' : 'none'}` }}>
+          <div style={{ display: `${this.props.gameState === 'CONTINUE' ? 'block' : 'none'}` }}>
             <span onClick={this.props.onGameStateChange}><i className="iconfont icon-pause"></i></span>
           </div>
         </div>
