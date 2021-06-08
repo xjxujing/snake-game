@@ -1,18 +1,16 @@
 import { memo } from 'react'
+import './index.css'
 
 const GameOver = memo(function (props) {
-  
+
   const state = props.gameState
 
-  function gameOver() {
-    props.changeGameState('START')
-  }
   return (
     <div className="cover" style={{ display: `${state === 'OVER' ? 'block' : 'none'}` }}>
-      <span>GAME OVER</span>
+      <span className="game-over">GAME OVER</span>
 
       <div className="opera">
-        <span onClick={gameOver}><i className="iconfont icon-list"></i></span>
+        <span onClick={props.reStartGame}><i className="iconfont icon-list"></i></span>
       </div>
     </div>
   )

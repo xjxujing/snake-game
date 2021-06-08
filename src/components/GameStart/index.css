@@ -7,15 +7,29 @@
   background-color: #ccc;
   z-index: 3;
   text-align: center;
-  line-height: 50vh;
   font-size: 2rem;
   color: white;
   letter-spacing: 2rem;
-  padding-left: 3.5rem;
+  text-indent: 2rem;
   text-shadow: 4px 4px 4px #000;
 }
 
 
 .start-btn {
   line-height: 4rem;
+}
+
+.game-title {
+  margin-top: 18rem;
+  margin-bottom: 10rem;
+  font-size: 3rem;
+}
+
+.high-score {
+  font-size: 1rem;
+  letter-spacing: 1rem;
+}
+
+.high-score:first-of-type {
+  padding-top: 2rem;
 }

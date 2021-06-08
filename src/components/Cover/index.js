@@ -6,7 +6,7 @@ const Cover = memo(function(props) {
 
   return (
     <div className="cover" style={{ display: `${state === 'PAUSE' ? 'block' : 'none'}` }}>
-      <span>PAUSED</span>
+      <span className="paused">PAUSED</span>
 
       <div className="opera">
         <span onClick={props.reStartGame}><i className="iconfont icon-list"></i></span>

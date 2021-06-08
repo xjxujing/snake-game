@@ -4,9 +4,16 @@
   right: 0;
   text-shadow: none;
   line-height: 1;
+  letter-spacing: 2rem;
 }
 
 i[class~="icon-play"], i[class~="icon-list"] {
   font-size: 3.8rem;
   color: #000;
+}
+
+.paused {
+  display: inline-block;
+  letter-spacing: 2rem;
+  text-indent: 2rem;
 }

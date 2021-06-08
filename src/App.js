@@ -7,7 +7,9 @@ import Snake from './components/Snake';
 import Control from './components/Control'
 import Cover from './components/Cover'
 import GameOver from './components/GameOver'
-import buttonWav from './audio/button.wav'
+import buttonWav from './audio/click.ogg'
+import overWav from './audio/gameover.ogg'
+
 
 
 let timeoutInstance;
@@ -25,18 +27,17 @@ const initialState = {
   food: generateFoodCoordinate(),
   direction: 'RIGHT',
   time: 500,
-
   gameState: 'START', // OVER | CONTINUE | PAUSE | START
-
   aspectRatio: calcScreenAspectRatio(),
+  score: 0
 }
 
 let buttonVoice = new Audio(buttonWav)
-
+let overVoice = new Audio(overWav)
 
 function calcScreenAspectRatio() {
-  const W = document.documentElement.clientWidth
-  const H = document.documentElement.clientHeight
+  const W = document.body.clientWidth
+  const H = document.body.clientHeight
   return (W / H) >= 0.56
 }
 
@@ -51,7 +52,7 @@ function generateFoodCoordinate() {
 
 class App extends Component {
 
-  state = initialState
+  state = { ...initialState, highScore: 0 }
 
 
   componentDidMount() {
@@ -136,9 +137,11 @@ class App extends Component {
       let newSnake = [...this.state.snakeBody];
       newSnake.unshift([]);
 
+      const score = (newSnake.length - 2) * 5
       this.setState({
         food: generateFoodCoordinate(),
-        snakeBody: newSnake
+        snakeBody: newSnake,
+        score
       })
     }
   }
@@ -168,13 +171,17 @@ class App extends Component {
   }
 
   onGameStart = () => {
+    buttonVoice.play()
     this.changeGameState('CONTINUE')
     this.moveSnake()
   }
 
   reStartGame = () => {
     this.changeGameState('START')
-    this.setState(initialState)
+    if (this.state.highScore < this.state.score) {
+      this.setState({ highScore: this.state.score })
+    }
+    this.setState({ ...initialState })
     clear(timeoutInstance)
   }
 
@@ -203,6 +210,7 @@ class App extends Component {
 
   onGameOver = () => {
     clear(timeoutInstance)
+    overVoice.play()
     this.changeGameState('OVER')
   }
 
@@ -210,6 +218,7 @@ class App extends Component {
     return (
       <div className={[`wrapper ${this.state.aspectRatio ? 'height-100' : 'width-100'}`]}>
         <GameStart
+          highScore={this.state.highScore}
           gameState={this.state.gameState}
           onGameStart={this.onGameStart}
         />
@@ -220,7 +229,8 @@ class App extends Component {
         </div>
 
         <Control
-          snakeBody={this.state.snakeBody}
+          score={this.state.score}
+          highScore={this.state.highScore}
           direction={this.state.direction}
           clickDirection={direc => this.clickDirection(direc)}
           onGameStateChange={this.onGameStateChange}
@@ -237,7 +247,7 @@ class App extends Component {
         >
         </Cover>
 
-        <GameOver gameState={this.state.gameState}></GameOver>
+        <GameOver gameState={this.state.gameState} reStartGame={this.reStartGame}></GameOver>
       </div>
     )
   }

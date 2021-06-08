@@ -3,7 +3,12 @@ import control from '../../assert/control.png';
 import './index.css'
 
 class Control extends Component {
- 
+
+  showScore = (score) => {
+    let scoreStr = String(score)
+    return scoreStr.padStart(5, '0')
+  }
+
   render() {
     return (
       <div className="control-box">
@@ -37,8 +42,8 @@ class Control extends Component {
 
         <div className="control-right" >
           <div className="record">
-            <h6>{`${(this.props.snakeBody.length  - 2) * 5}`}</h6>
-            <h6>{}</h6>
+            <h6>{this.showScore(this.props.score)}</h6>
+            <h6>{this.showScore(this.props.highScore)}</h6>
           </div>
 
           <div style={{ display: `${this.props.gameState === 'CONTINUE' ? 'block' : 'none'}` }}>
