@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.bd85f8db.chunk.css",
-    "main.js": "/static/js/main.51868d28.chunk.js",
-    "main.js.map": "/static/js/main.51868d28.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.659d3cd9.js",
-    "runtime-main.js.map": "/static/js/runtime-main.659d3cd9.js.map",
-    "static/js/2.409bcc32.chunk.js": "/static/js/2.409bcc32.chunk.js",
-    "static/js/2.409bcc32.chunk.js.map": "/static/js/2.409bcc32.chunk.js.map",
-    "static/js/3.4ed39e42.chunk.js": "/static/js/3.4ed39e42.chunk.js",
-    "static/js/3.4ed39e42.chunk.js.map": "/static/js/3.4ed39e42.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.bd85f8db.chunk.css.map": "/static/css/main.bd85f8db.chunk.css.map",
-    "static/js/2.409bcc32.chunk.js.LICENSE.txt": "/static/js/2.409bcc32.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/PressStart2P-Regular.5f45b521.ttf",
-    "static/media/click.3295752d.ogg": "/static/media/click.3295752d.ogg",
-    "static/media/control.2102a554.png": "/static/media/control.2102a554.png",
-    "static/media/gameover.b25dd26e.ogg": "/static/media/gameover.b25dd26e.ogg"
+    "main.css": "./static/css/main.6beff0a4.chunk.css",
+    "main.js": "./static/js/main.51868d28.chunk.js",
+    "main.js.map": "./static/js/main.51868d28.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.d3021975.js",
+    "runtime-main.js.map": "./static/js/runtime-main.d3021975.js.map",
+    "static/js/2.409bcc32.chunk.js": "./static/js/2.409bcc32.chunk.js",
+    "static/js/2.409bcc32.chunk.js.map": "./static/js/2.409bcc32.chunk.js.map",
+    "static/js/3.4ed39e42.chunk.js": "./static/js/3.4ed39e42.chunk.js",
+    "static/js/3.4ed39e42.chunk.js.map": "./static/js/3.4ed39e42.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/main.6beff0a4.chunk.css.map": "./static/css/main.6beff0a4.chunk.css.map",
+    "static/js/2.409bcc32.chunk.js.LICENSE.txt": "./static/js/2.409bcc32.chunk.js.LICENSE.txt",
+    "static/media/index.css": "./static/media/PressStart2P-Regular.5f45b521.ttf",
+    "static/media/click.3295752d.ogg": "./static/media/click.3295752d.ogg",
+    "static/media/control.2102a554.png": "./static/media/control.2102a554.png",
+    "static/media/gameover.b25dd26e.ogg": "./static/media/gameover.b25dd26e.ogg"
   },
   "entrypoints": [
-    "static/js/runtime-main.659d3cd9.js",
+    "static/js/runtime-main.d3021975.js",
     "static/js/2.409bcc32.chunk.js",
-    "static/css/main.bd85f8db.chunk.css",
+    "static/css/main.6beff0a4.chunk.css",
     "static/js/main.51868d28.chunk.js"
   ]
 }
