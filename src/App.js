@@ -48,12 +48,15 @@ function generateFoodCoordinate() {
   return [x, y]
 }
 
+const localHighScore = localStorage.getItem('snake-game-high-score')
+
 class App extends Component {
 
-  state = { ...initialState, highScore: 0 }
+  state = { ...initialState, highScore: localHighScore ? localHighScore : 0}
 
 
   componentDidMount() {
+    
     document.addEventListener('keydown', this.controlDirection.bind(this))
   }
 
@@ -141,6 +144,8 @@ class App extends Component {
         snakeBody: newSnake,
         score
       })
+
+      this.changeSpeed('SPEED_UP')
     }
   }
 
@@ -177,6 +182,7 @@ class App extends Component {
   reStartGame = () => {
     this.changeGameState('START')
     if (this.state.highScore < this.state.score) {
+      localStorage.setItem('snake-game-high-score', this.state.score)
       this.setState({ highScore: this.state.score })
     }
     this.setState({ ...initialState })
