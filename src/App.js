@@ -10,6 +10,8 @@ import GameOver from './components/GameOver'
 import buttonWav from './audio/click.ogg'
 import overWav from './audio/gameover.ogg'
 
+// import {throttle} from './utils/utils'
+
 let timeoutInstance;
 
 const clear = (tm) => {
@@ -56,8 +58,7 @@ class App extends Component {
 
 
   componentDidMount() {
-    
-    document.addEventListener('keydown', this.controlDirection.bind(this))
+    document.addEventListener('keydown', this.controlDirection)
   }
 
   componentDidUpdate = () => {
@@ -68,10 +69,11 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.controlDirection.bind(this))
+    document.removeEventListener('keydown', this.controlDirection)
   }
 
-  clickDirection = (direction) => {
+  clickDirection = (direction) => {   
+    // console.log('clickDirection') 
     const currentDirection = this.state.direction
     if (currentDirection === direction) return
 
@@ -82,6 +84,7 @@ class App extends Component {
     if (direction === 'UP' && currentDirection === 'DOWN') return
 
     buttonVoice.play()
+    // console.log(direction)
     this.setState({ direction })
   }
 
